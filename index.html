@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Build Battle 3D</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+  </script>
+</head>
+<body>
+  <div id="game"></div>
+  <div id="menu" class="overlay">
+    <div class="panel">
+      <div class="eyebrow">BUILD • FIGHT • SURVIVE</div>
+      <h1>BUILD BATTLE <span>3D</span></h1>
+      <p class="subtitle">A browser-based building and battle arena.</p>
+      <div class="menu-grid">
+        <button id="practiceBtn" class="primary">PRACTICE VS BOTS</button>
+        <button id="onlineBtn">ONLINE 1v1</button>
+      </div>
+      <div id="onlinePanel" class="subpanel hidden">
+        <label for="roomInput">ROOM CODE</label>
+        <div class="inline">
+          <input id="roomInput" maxlength="16" placeholder="e.g. DUEL123">
+          <button id="joinBtn">JOIN</button>
+        </div>
+        <button id="createRoomBtn" class="wide">CREATE PRIVATE ROOM</button>
+        <p id="networkStatus" class="status">Set your multiplayer server URL in config.js.</p>
+      </div>
+      <div class="menu-grid lower">
+        <button id="settingsBtn">CONTROLS & SETTINGS</button>
+        <button id="howBtn">HOW TO PLAY</button>
+      </div>
+      <p class="tiny">Prototype build • Online play requires the separately hosted server.</p>
+    </div>
+  </div>
+
+  <div id="settings" class="overlay hidden">
+    <div class="panel small-panel">
+      <h2>CONTROLS</h2>
+      <p class="subtitle">Click a key, then press the replacement key.</p>
+      <div id="bindRows" class="bind-list"></div>
+      <div class="menu-grid">
+        <button id="resetBinds">RESET DEFAULTS</button>
+        <button id="closeSettings" class="primary">DONE</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="how" class="overlay hidden">
+    <div class="panel small-panel">
+      <h2>HOW TO PLAY</h2>
+      <p><b>WASD</b> move • <b>Mouse</b> aim • <b>Click</b> shoot • <b>Space</b> jump</p>
+      <p><b>Q</b> wall • <b>C</b> floor • <b>V</b> ramp • <b>R</b> rotate build</p>
+      <p><b>1</b> shotgun • <b>2</b> rifle • <b>3</b> pickaxe • <b>Esc</b> unlock mouse</p>
+      <p>Click a placed build while holding the edit key to remove it. Use the build buttons to place structures in front of you.</p>
+      <button id="closeHow" class="primary wide">GOT IT</button>
+    </div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div class="topbar">
+      <div class="brand">BUILD BATTLE <span>3D</span></div>
+      <div id="modeLabel">PRACTICE</div>
+      <button id="leaveBtn">LEAVE MATCH</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><small>HEALTH</small><strong id="health">100</strong><div class="bar"><i id="healthBar"></i></div></div>
+      <div class="stat"><small>ELIMS</small><strong id="elims">0</strong></div>
+      <div class="stat"><small>MATERIALS</small><strong id="materials">500</strong></div>
+    </div>
+    <div class="crosshair"><i></i><b></b></div>
+    <div class="hotbar">
+      <div class="slot active" data-slot="1"><small>1</small>SHOTGUN</div>
+      <div class="slot" data-slot="2"><small>2</small>RIFLE</div>
+      <div class="slot" data-slot="3"><small>3</small>PICKAXE</div>
+      <div class="slot" data-slot="4"><small>Q</small>WALL</div>
+      <div class="slot" data-slot="5"><small>C</small>FLOOR</div>
+      <div class="slot" data-slot="6"><small>V</small>RAMP</div>
+    </div>
+    <div id="toast"></div>
+    <div class="help-hint">Click game to lock mouse • Esc to release</div>
+  </div>
+  <script src="config.js"></script>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
